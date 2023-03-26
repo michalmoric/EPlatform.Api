@@ -1,8 +1,10 @@
-﻿namespace MoricApps.EPlatform.Application
+﻿using MoricApps.EPlatform.Domain.Models;
+
+namespace MoricApps.EPlatform.Application
 {
     public interface ITeacherService
     {
-        Task AddTeacher();
+        Task AddTeacher(Teacher teacher);
         Task DeactivateTeacher(int id);
         Task DeleteTeacher(int id);
         Task GetTeacher(int id);

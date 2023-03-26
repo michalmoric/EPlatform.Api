@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoricApps.EPlatform.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace MoricApps.EPlatform.Contexts
 {
-    public class TeacherRepository
+    public class TeacherRepository : ITeacherRepository
     {
-        //Podobne metody do Teacher Service tylko zawierające bezpośrednie strzały do bazy danych przez TeacherDbContext
+        private readonly TeachersDbContext _context;
+        public TeacherRepository(TeachersDbContext context)
+        {
+            _context = context;
+        }
+        public async Task AddTeacherAsync(Teacher teacher)
+        {
+            await _context.Teachers.AddAsync(teacher);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }

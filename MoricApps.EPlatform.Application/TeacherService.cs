@@ -1,4 +1,5 @@
-﻿using MoricApps.EPlatform.Domain.Models;
+﻿using MoricApps.EPlatform.Contexts;
+using MoricApps.EPlatform.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace MoricApps.EPlatform.Application
 {
     public class TeacherService : ITeacherService // Logika przetwarzająca dane idące z lub do bazy
     {
+        private readonly ITeacherRepository _repository;
+        public TeacherService(ITeacherRepository repository)
+        {
+            _repository = repository;
+        }
         public async Task GetTeachers()
         {
             await Task.CompletedTask; // TODO Zwroc liste wszystkich nauczycieli
@@ -17,9 +23,9 @@ namespace MoricApps.EPlatform.Application
         {
             await Task.CompletedTask;// TODO Zwroc jednego nauczyciela
         }
-        public async Task AddTeacher()
+        public async Task AddTeacher(Teacher teacher)
         {
-            await Task.CompletedTask;// TODO Zarejestruj nauczyciela
+            await _repository.AddTeacherAsync(teacher);
         }
         public async Task ModifyTeacher(int id)
         {

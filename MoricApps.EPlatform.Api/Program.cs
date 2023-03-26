@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using MoricApps.EPlatform.Application;
+using MoricApps.EPlatform.Contexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<TeachersDbContext>(
+    DbContextOptions => DbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:TeachersConnectionString"]));
+builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
