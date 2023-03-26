@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MoricApps.EPlatform.Application;
 using MoricApps.EPlatform.Domain.Models;
+using MoricApps.EPlatform.Dtos;
 
 namespace MoricApps.EPlatform.Api.Controllers
 {
@@ -16,10 +17,9 @@ namespace MoricApps.EPlatform.Api.Controllers
             _teacherService = teacherService;
         }
         [HttpPost("/add")]
-        public async Task<ActionResult<Teacher>> AddTeacherAction(Teacher teacher)
+        public async Task<ActionResult<TeacherAddDto>> AddTeacherAction(Teacher teacher)
         {
-            await _teacherService.AddTeacher(teacher);
-            return Ok(teacher);
+            return Ok(await _teacherService.AddTeacher(teacher));
         }
     }
 }

@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Contexts.csproj" />
     <ProjectReference Include="..\MoricApps.EPlatform.Domain\MoricApps.EPlatform.Domain.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Dtos\MoricApps.EPlatform.Dtos.csproj" />
   </ItemGroup>
 
 </Project>

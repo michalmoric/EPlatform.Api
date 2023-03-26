@@ -1,5 +1,6 @@
 ﻿using MoricApps.EPlatform.Contexts;
 using MoricApps.EPlatform.Domain.Models;
+using MoricApps.EPlatform.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,16 @@ namespace MoricApps.EPlatform.Application
         {
             await Task.CompletedTask;// TODO Zwroc jednego nauczyciela
         }
-        public async Task AddTeacher(Teacher teacher)
+        public async Task<TeacherAddDto> AddTeacher(Teacher teacher)
         {
-            await _repository.AddTeacherAsync(teacher);
+            var result= await _repository.AddTeacherAsync(teacher);
+            TeacherAddDto addDto = new TeacherAddDto();
+            addDto.Id = teacher.Id;
+            addDto.FirstName = teacher.FirstName;
+            addDto.LastName = teacher.LastName;
+            addDto.Email = teacher.Email;
+            addDto.PhoneNumber = teacher.PhoneNumber;
+            return addDto;
         }
         public async Task ModifyTeacher(int id)
         {

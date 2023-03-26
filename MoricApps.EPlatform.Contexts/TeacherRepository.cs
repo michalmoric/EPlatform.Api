@@ -14,10 +14,11 @@ namespace MoricApps.EPlatform.Contexts
         {
             _context = context;
         }
-        public async Task AddTeacherAsync(Teacher teacher)
+        public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
             await _context.Teachers.AddAsync(teacher);
             await _context.SaveChangesAsync();
+            return teacher;
 
         }
     }

@@ -11,6 +11,7 @@ namespace MoricApps.EPlatform.Domain.Models
     public class Teacher
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string FirstName { get; set; }
@@ -22,14 +23,13 @@ namespace MoricApps.EPlatform.Domain.Models
         [Phone]
         public string PhoneNumber { get;set; }
 
-        public TeacherStatus Status { get; private set; }
+        public TeacherStatus Status { get; private set; } = TeacherStatus.Active;
         public Teacher(string firstName, string lastName, string email, string phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
-            Status = TeacherStatus.Active;
         }
         public void Disactivate() 
         { 
