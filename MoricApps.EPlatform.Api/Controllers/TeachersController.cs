@@ -16,7 +16,27 @@ namespace MoricApps.EPlatform.Api.Controllers
         {
             _teacherService = teacherService;
         }
-        [HttpPost("/add")]
+        [HttpGet]
+        public async Task<ActionResult<List<TeacherGetDto>>> GetTeachersAction([FromQuery] int pageSize, [FromQuery] int pageNo)
+        {
+            if (pageSize <= 0 && pageNo <= 0) 
+            {
+                return BadRequest();
+            }
+            
+            return Ok(await _teacherService.GetTeachers(pageSize,pageNo));
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TeacherGetDto>> GetTeacherAction(int id)
+        {
+            var result = await _teacherService.GetTeacher(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+        [HttpPost("add")]
         public async Task<ActionResult<TeacherAddDto>> AddTeacherAction(Teacher teacher)
         {
             return Ok(await _teacherService.AddTeacher(teacher));

@@ -5,5 +5,9 @@ namespace MoricApps.EPlatform.Contexts
     public interface ITeacherRepository
     {
         Task<Teacher> AddTeacherAsync(Teacher teacher);
+
+        Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo);
+
+        Task<Teacher> GetTeacherAsync(int Id);
     }
 }

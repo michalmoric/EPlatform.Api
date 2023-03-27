@@ -16,13 +16,37 @@ namespace MoricApps.EPlatform.Application
         {
             _repository = repository;
         }
-        public async Task GetTeachers()
+        public async Task<List<TeacherGetDto>> GetTeachers(int pageSize,int pageNo)
         {
-            await Task.CompletedTask; // TODO Zwroc liste wszystkich nauczycieli
+            var teachers = await _repository.GetTeachersAsync(pageSize,pageNo);
+            List<TeacherGetDto> getDtoList = new List<TeacherGetDto>();
+            foreach(var teacher in teachers)
+            {
+                getDtoList.Add(new TeacherGetDto
+                {
+                    Id = teacher.Id,
+                    FirstName = teacher.FirstName,
+                    LastName = teacher.LastName,
+                    Email = teacher.Email,
+                    PhoneNumber = teacher.PhoneNumber
+                });
+            }
+            return getDtoList;
         }
-        public async Task GetTeacher(int id)
+        public async Task<TeacherGetDto> GetTeacher(int id)
         {
-            await Task.CompletedTask;// TODO Zwroc jednego nauczyciela
+            var teacher = await _repository.GetTeacherAsync(id);
+            TeacherGetDto getDto = new TeacherGetDto();
+            if(teacher == null)
+            {
+                return null;
+            }
+            getDto.Id = teacher.Id;
+            getDto.FirstName = teacher.FirstName;
+            getDto.LastName = teacher.LastName;
+            getDto.Email = teacher.Email;
+            getDto.PhoneNumber = teacher.PhoneNumber;
+            return getDto;
         }
         public async Task<TeacherAddDto> AddTeacher(Teacher teacher)
         {

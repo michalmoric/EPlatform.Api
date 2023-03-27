@@ -8,8 +8,8 @@ namespace MoricApps.EPlatform.Application
         Task<TeacherAddDto> AddTeacher(Teacher teacher);
         Task DeactivateTeacher(int id);
         Task DeleteTeacher(int id);
-        Task GetTeacher(int id);
-        Task GetTeachers();
+        Task<TeacherGetDto> GetTeacher(int id);
+        Task<List<TeacherGetDto>> GetTeachers(int pageSize, int pageNo);
         Task ModifyTeacher(int id);
         Task ReactivateTeacher(int id);
     }
