@@ -22,6 +22,20 @@ namespace MoricApps.EPlatform.Contexts
             return teacher;
 
         }
+        public async Task<Teacher> ModyfyTeacherAsync(int Id, Teacher teacher)
+        {
+            var currentTeacher = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == Id);
+            if (currentTeacher == null)
+            {
+                return null;
+            }
+            currentTeacher.FirstName = teacher.FirstName;
+            currentTeacher.LastName = teacher.LastName;
+            currentTeacher.PhoneNumber = teacher.PhoneNumber;
+            currentTeacher.Email = teacher.Email;
+            await _context.SaveChangesAsync();
+            return currentTeacher;
+        }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
             return await _context.Teachers.Skip((pageNo-1)*pageSize).Take(pageSize).ToListAsync();

@@ -41,5 +41,15 @@ namespace MoricApps.EPlatform.Api.Controllers
         {
             return Ok(await _teacherService.AddTeacher(teacher));
         }
+        [HttpPut("modyfy/{id}")]
+        public async Task<ActionResult<TeacherModyfyDto>> ModyfyTeacherAction(int id,Teacher teacher)
+        {
+            var result = await _teacherService.ModifyTeacher(id, teacher);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

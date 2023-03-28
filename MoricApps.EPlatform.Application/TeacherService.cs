@@ -59,9 +59,20 @@ namespace MoricApps.EPlatform.Application
             addDto.PhoneNumber = teacher.PhoneNumber;
             return addDto;
         }
-        public async Task ModifyTeacher(int id)
+        public async Task<TeacherModyfyDto> ModifyTeacher(int id,Teacher teacher)
         {
-            await Task.CompletedTask;// TODO Zmodyfikuj dane nauczyciela
+            var result = await _repository.ModyfyTeacherAsync(id, teacher);
+            if(result == null)
+            {
+                return null;
+            }
+            TeacherModyfyDto modifyDto = new TeacherModyfyDto();
+            modifyDto.Id = result.Id;
+            modifyDto.FirstName = result.FirstName;
+            modifyDto.LastName = result.LastName;
+            modifyDto.Email = result.Email;
+            modifyDto.PhoneNumber = result.PhoneNumber;
+            return modifyDto;
         }
         public async Task DeleteTeacher(int id)
         {
