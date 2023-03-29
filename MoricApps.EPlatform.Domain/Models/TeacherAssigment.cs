@@ -8,9 +8,9 @@ namespace MoricApps.EPlatform.Domain.Models
 {
     public class TeacherAssigment
     {
-        public int AssessmentId { get; set; }
+        public int Id { get; set; }
 
-        public Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
 
         public DateTime BeginDate { get; set; }
 

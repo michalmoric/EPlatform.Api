@@ -36,15 +36,32 @@ namespace MoricApps.EPlatform.Contexts
             await _context.SaveChangesAsync();
             return currentTeacher;
         }
+        public async Task<Teacher> DisactivateTeacherAsync(int Id)
+        {
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == Id);
+            if(teacher == null)
+            {
+                return null;
+            }
+            teacher.Disactivate();
+            await _context.SaveChangesAsync();
+            return teacher;
+        }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
             return await _context.Teachers.Skip((pageNo-1)*pageSize).Take(pageSize).ToListAsync();
             
         }
-        public async Task<Teacher> GetTeacherAsync(int Id)
+        public async Task<Teacher?> GetTeacherAsync(int Id)
         {
 
             return await  _context.Teachers.FirstOrDefaultAsync(x => x.Id == Id);
         }
+        public async Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id)
+        {
+            var assigments = await _context.Assigments.Where(t => t.Id == Id).ToListAsync();
+            return assigments;
+        }
     }
+
 }

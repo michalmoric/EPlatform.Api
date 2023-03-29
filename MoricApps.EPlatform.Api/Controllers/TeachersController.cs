@@ -51,5 +51,15 @@ namespace MoricApps.EPlatform.Api.Controllers
             }
             return Ok(result);
         }
+        [HttpPatch("deactivate/{id}")]
+        public async Task<ActionResult<TeacherDeactDto>> DeactivateTeacher(int id)
+        {
+            var result = await _teacherService.DeactivateTeacher(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

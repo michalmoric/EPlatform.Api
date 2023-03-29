@@ -6,7 +6,7 @@ namespace MoricApps.EPlatform.Application
     public interface ITeacherService
     {
         Task<TeacherAddDto> AddTeacher(Teacher teacher);
-        Task DeactivateTeacher(int id);
+        Task<TeacherDeactDto> DeactivateTeacher(int id);
         Task DeleteTeacher(int id);
         Task<TeacherGetDto> GetTeacher(int id);
         Task<List<TeacherGetDto>> GetTeachers(int pageSize, int pageNo);

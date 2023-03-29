@@ -24,12 +24,16 @@ namespace MoricApps.EPlatform.Domain.Models
         public string PhoneNumber { get;set; }
 
         public TeacherStatus Status { get; private set; } = TeacherStatus.Active;
+
+        public virtual ICollection<TeacherAssigment> Assigments { get; set; } = new List<TeacherAssigment>();
+
         public Teacher(string firstName, string lastName, string email, string phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
+
         }
         public void Disactivate() 
         { 

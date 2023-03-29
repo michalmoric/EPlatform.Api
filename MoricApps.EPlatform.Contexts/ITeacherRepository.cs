@@ -8,8 +8,11 @@ namespace MoricApps.EPlatform.Contexts
 
         Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo);
 
-        Task<Teacher> GetTeacherAsync(int Id);
+        Task<Teacher?> GetTeacherAsync(int Id);
 
         Task<Teacher> ModyfyTeacherAsync(int Id, Teacher teacher);
+
+        Task<Teacher> DisactivateTeacherAsync(int Id);
+        Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id);
     }
 }

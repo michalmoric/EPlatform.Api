@@ -1,4 +1,5 @@
-﻿using MoricApps.EPlatform.Contexts;
+﻿using Microsoft.IdentityModel.Tokens;
+using MoricApps.EPlatform.Contexts;
 using MoricApps.EPlatform.Domain.Models;
 using MoricApps.EPlatform.Dtos;
 using System;
@@ -78,9 +79,32 @@ namespace MoricApps.EPlatform.Application
         {
             await Task.CompletedTask;// TODO Wyrejestruj nauczyciela
         }
-        public async Task DeactivateTeacher(int id)
+        public async Task<TeacherDeactDto> DeactivateTeacher(int id)
         {
-            await Task.CompletedTask;//TODO Zawieś nauczyciela
+            var assigments = await _repository.GetAssigmentsAsync(id);
+            if (!assigments.IsNullOrEmpty())
+            {
+                foreach (var assigment in assigments)
+                {
+                    if (assigment.EndDate > DateTime.Now)
+                    {
+                        return null;
+                    }
+                }
+            }
+            var teacher = await _repository.DisactivateTeacherAsync(id);
+            if(teacher == null)
+            {
+                return null;
+            }
+            TeacherDeactDto deactDto = new TeacherDeactDto();
+            deactDto.Id = teacher.Id;
+            deactDto.FirstName = teacher.FirstName;
+            deactDto.LastName = teacher.LastName;
+            deactDto.Email = teacher.Email;
+            deactDto.PhoneNumber = teacher.PhoneNumber;
+            deactDto.status = teacher.Status;
+            return deactDto;
         }
         public async Task ReactivateTeacher(int id)
         {

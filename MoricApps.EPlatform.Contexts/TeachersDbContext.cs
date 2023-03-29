@@ -11,6 +11,8 @@ namespace MoricApps.EPlatform.Contexts
     public class TeachersDbContext: DbContext
     {
         public DbSet<Teacher> Teachers { get; set; } = null!;
+
+        public DbSet<TeacherAssigment> Assigments { get; set; } = null!;
         public TeachersDbContext(DbContextOptions<TeachersDbContext> options) : base(options) 
         { 
 
