@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoricApps.EPlatform.Domain.Models
+namespace MoricApps.EPlatform.Teachers.Domain.Models
 {
     public enum TeacherStatus
     {

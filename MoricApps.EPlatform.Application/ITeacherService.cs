@@ -1,16 +1,16 @@
-﻿using MoricApps.EPlatform.Domain.Models;
-using MoricApps.EPlatform.Dtos;
+﻿using MoricApps.EPlatform.Teachers.Contract;
+using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Application
+namespace MoricApps.EPlatform.Teachers.Storage
 {
     public interface ITeacherService
     {
-        Task<TeacherAddDto> AddTeacher(Teacher teacher);
-        Task<TeacherDeactDto> DeactivateTeacher(int id);
+        Task<TeacherReturnDto> AddTeacher(TeacherInputDto teacher);
+        Task<TeacherReturnDto> DeactivateTeacher(int id);
         Task DeleteTeacher(int id);
-        Task<TeacherGetDto> GetTeacher(int id);
-        Task<List<TeacherGetDto>> GetTeachers(int pageSize, int pageNo);
-        Task<TeacherModyfyDto> ModifyTeacher(int id,Teacher teacher);
+        Task<TeacherReturnDto> GetTeacher(int id);
+        Task<List<TeacherReturnDto>> GetTeachers(int pageSize, int pageNo);
+        Task<TeacherReturnDto> ModifyTeacher(int id, TeacherInputDto teacher);
         Task ReactivateTeacher(int id);
     }
 }

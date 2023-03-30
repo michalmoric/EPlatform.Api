@@ -1,15 +1,14 @@
-﻿using System;
+﻿using MoricApps.EPlatform.Teachers.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoricApps.EPlatform.Dtos
+namespace MoricApps.EPlatform.Teachers.Contract
 {
-    public class TeacherModyfyDto
+    public class TeacherInputDto
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

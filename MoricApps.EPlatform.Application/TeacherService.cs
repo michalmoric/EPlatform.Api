@@ -1,14 +1,13 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using MoricApps.EPlatform.Contexts;
-using MoricApps.EPlatform.Domain.Models;
-using MoricApps.EPlatform.Dtos;
+using MoricApps.EPlatform.Teachers.Contract;
+using MoricApps.EPlatform.Teachers.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoricApps.EPlatform.Application
+namespace MoricApps.EPlatform.Teachers.Storage
 {
     public class TeacherService : ITeacherService // Logika przetwarzająca dane idące z lub do bazy
     {
@@ -17,28 +16,29 @@ namespace MoricApps.EPlatform.Application
         {
             _repository = repository;
         }
-        public async Task<List<TeacherGetDto>> GetTeachers(int pageSize,int pageNo)
+        public async Task<List<TeacherReturnDto>> GetTeachers(int pageSize, int pageNo)
         {
-            var teachers = await _repository.GetTeachersAsync(pageSize,pageNo);
-            List<TeacherGetDto> getDtoList = new List<TeacherGetDto>();
-            foreach(var teacher in teachers)
+            var teachers = await _repository.GetTeachersAsync(pageSize, pageNo);
+            List<TeacherReturnDto> getDtoList = new List<TeacherReturnDto>();
+            foreach (var teacher in teachers)
             {
-                getDtoList.Add(new TeacherGetDto
+                getDtoList.Add(new TeacherReturnDto
                 {
                     Id = teacher.Id,
                     FirstName = teacher.FirstName,
                     LastName = teacher.LastName,
                     Email = teacher.Email,
-                    PhoneNumber = teacher.PhoneNumber
+                    PhoneNumber = teacher.PhoneNumber,
+                    Status = teacher.Status
                 });
             }
             return getDtoList;
         }
-        public async Task<TeacherGetDto> GetTeacher(int id)
+        public async Task<TeacherReturnDto> GetTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
-            TeacherGetDto getDto = new TeacherGetDto();
-            if(teacher == null)
+            TeacherReturnDto getDto = new TeacherReturnDto();
+            if (teacher == null)
             {
                 return null;
             }
@@ -47,27 +47,31 @@ namespace MoricApps.EPlatform.Application
             getDto.LastName = teacher.LastName;
             getDto.Email = teacher.Email;
             getDto.PhoneNumber = teacher.PhoneNumber;
+            getDto.Status = teacher.Status;
             return getDto;
         }
-        public async Task<TeacherAddDto> AddTeacher(Teacher teacher)
+        public async Task<TeacherReturnDto> AddTeacher(TeacherInputDto teacher)
         {
-            var result= await _repository.AddTeacherAsync(teacher);
-            TeacherAddDto addDto = new TeacherAddDto();
-            addDto.Id = teacher.Id;
-            addDto.FirstName = teacher.FirstName;
-            addDto.LastName = teacher.LastName;
-            addDto.Email = teacher.Email;
-            addDto.PhoneNumber = teacher.PhoneNumber;
+            var temp = new Teacher(teacher.FirstName,teacher.LastName,teacher.Email,teacher.PhoneNumber);
+            var result = await _repository.AddTeacherAsync(temp);
+            TeacherReturnDto addDto = new TeacherReturnDto();
+            addDto.Id = result.Id;
+            addDto.FirstName = result.FirstName;
+            addDto.LastName = result.LastName;
+            addDto.Email = result.Email;
+            addDto.PhoneNumber = result.PhoneNumber;
+            addDto.Status = result.Status;
             return addDto;
         }
-        public async Task<TeacherModyfyDto> ModifyTeacher(int id,Teacher teacher)
+        public async Task<TeacherReturnDto> ModifyTeacher(int id, TeacherInputDto teacher)
         {
-            var result = await _repository.ModyfyTeacherAsync(id, teacher);
-            if(result == null)
+            var temp = new Teacher(teacher.FirstName, teacher.LastName, teacher.Email, teacher.PhoneNumber);
+            var result = await _repository.ModyfyTeacherAsync(id, temp);
+            if (result == null)
             {
                 return null;
             }
-            TeacherModyfyDto modifyDto = new TeacherModyfyDto();
+            TeacherReturnDto modifyDto = new TeacherReturnDto();
             modifyDto.Id = result.Id;
             modifyDto.FirstName = result.FirstName;
             modifyDto.LastName = result.LastName;
@@ -79,7 +83,7 @@ namespace MoricApps.EPlatform.Application
         {
             await Task.CompletedTask;// TODO Wyrejestruj nauczyciela
         }
-        public async Task<TeacherDeactDto> DeactivateTeacher(int id)
+        public async Task<TeacherReturnDto> DeactivateTeacher(int id)
         {
             var assigments = await _repository.GetAssigmentsAsync(id);
             if (!assigments.IsNullOrEmpty())
@@ -93,17 +97,17 @@ namespace MoricApps.EPlatform.Application
                 }
             }
             var teacher = await _repository.DisactivateTeacherAsync(id);
-            if(teacher == null)
+            if (teacher == null)
             {
                 return null;
             }
-            TeacherDeactDto deactDto = new TeacherDeactDto();
+            TeacherReturnDto deactDto = new TeacherReturnDto();
             deactDto.Id = teacher.Id;
             deactDto.FirstName = teacher.FirstName;
             deactDto.LastName = teacher.LastName;
             deactDto.Email = teacher.Email;
             deactDto.PhoneNumber = teacher.PhoneNumber;
-            deactDto.status = teacher.Status;
+            deactDto.Status = teacher.Status;
             return deactDto;
         }
         public async Task ReactivateTeacher(int id)

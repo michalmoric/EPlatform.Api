@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,10 +12,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoricApps.EPlatform.Domain\MoricApps.EPlatform.Domain.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Application\MoricApps.EPlatform.Teachers.Application.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Teachers.Storage.csproj" />
   </ItemGroup>
 
 </Project>

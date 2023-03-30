@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoricApps.EPlatform.Teachers.Storage;
 
@@ -11,9 +12,11 @@ using MoricApps.EPlatform.Teachers.Storage;
 namespace MoricApps.EPlatform.Contexts.Migrations
 {
     [DbContext(typeof(TeachersDbContext))]
-    partial class TeachersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230330113901_AddedEntityClasses")]
+    partial class AddedEntityClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

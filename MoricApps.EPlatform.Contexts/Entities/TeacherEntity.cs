@@ -1,28 +1,34 @@
-﻿using System;
+﻿using MoricApps.EPlatform.Teachers.Domain.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-namespace MoricApps.EPlatform.Teachers.Domain.Models
+
+namespace MoricApps.EPlatform.Teachers.Storage.Entities
 {
-    public class Teacher
+    public class TeacherEntity
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
+        [Phone]
         public string PhoneNumber { get; set; }
 
         public TeacherStatus Status { get; set; } = TeacherStatus.Active;
 
         public virtual ICollection<TeacherAssigment> Assigments { get; set; } = new List<TeacherAssigment>();
 
-        public Teacher(string firstName, string lastName, string email, string phoneNumber)
+        public TeacherEntity(string firstName, string lastName, string email, string phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -34,7 +40,5 @@ namespace MoricApps.EPlatform.Teachers.Domain.Models
         {
             Status = TeacherStatus.Inactive;
         }
-
-
     }
 }

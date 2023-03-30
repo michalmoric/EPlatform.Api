@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Api", "MoricApps.EPlatform.Api\MoricApps.EPlatform.Api.csproj", "{F47E8606-8606-416D-8D53-913ED337E7D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Teachers.Api", "MoricApps.EPlatform.Api\MoricApps.EPlatform.Teachers.Api.csproj", "{F47E8606-8606-416D-8D53-913ED337E7D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Domain", "MoricApps.EPlatform.Domain\MoricApps.EPlatform.Domain.csproj", "{310E6411-9BF1-4C67-B7B0-B9992A525295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Teachers.Domain", "MoricApps.EPlatform.Domain\MoricApps.EPlatform.Teachers.Domain.csproj", "{310E6411-9BF1-4C67-B7B0-B9992A525295}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Application", "MoricApps.EPlatform.Application\MoricApps.EPlatform.Application.csproj", "{CF061807-5DA0-44CE-A60B-7A265DB92708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Teachers.Application", "MoricApps.EPlatform.Application\MoricApps.EPlatform.Teachers.Application.csproj", "{CF061807-5DA0-44CE-A60B-7A265DB92708}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Contexts", "MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Contexts.csproj", "{94CC6FC5-E6E7-4FFB-9E92-EB7FA2C927A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Teachers.Storage", "MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Teachers.Storage.csproj", "{94CC6FC5-E6E7-4FFB-9E92-EB7FA2C927A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoricApps.EPlatform.Dtos", "MoricApps.EPlatform.Dtos\MoricApps.EPlatform.Dtos.csproj", "{071D2FE5-9A18-4A62-8B48-476853E61B6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoricApps.EPlatform.Teachers.Contract", "MoricApps.EPlatform.Dtos\MoricApps.EPlatform.Teachers.Contract.csproj", "{071D2FE5-9A18-4A62-8B48-476853E61B6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

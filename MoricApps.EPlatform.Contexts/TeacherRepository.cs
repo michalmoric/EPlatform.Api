@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoricApps.EPlatform.Domain.Models;
+using MoricApps.EPlatform.Teachers.Domain.Models;
+using MoricApps.EPlatform.Teachers.Storage;
+using MoricApps.EPlatform.Teachers.Storage.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoricApps.EPlatform.Contexts
+namespace MoricApps.EPlatform.Teachers.Storage
 {
     public class TeacherRepository : ITeacherRepository
     {
@@ -15,9 +17,38 @@ namespace MoricApps.EPlatform.Contexts
         {
             _context = context;
         }
+        private TeacherEntity ConvertTeacher(Teacher teacher)
+        {
+            if (teacher == null) return null;
+            TeacherEntity entity= new TeacherEntity(teacher.FirstName,teacher.LastName,teacher.Email,teacher.PhoneNumber);
+            entity.Id = teacher.Id;
+            entity.Status = teacher.Status;
+            return entity;
+
+        }
+        private Teacher ConvertEntity(TeacherEntity entity)
+        {
+            if (entity == null) return null;
+            Teacher teacher = new Teacher(entity.FirstName, entity.LastName, entity.Email, entity.PhoneNumber);
+            teacher.Id = entity.Id;
+            teacher.Status = entity.Status;
+            return teacher;
+
+        }
+        private TeacherAssigment ConvertAssigments(TeacherAssigmentEntity entity)
+        {
+            if (entity == null) return null;
+            TeacherAssigment assigment = new TeacherAssigment();
+            assigment.Id = entity.Id;
+            assigment.Teacher=entity.Teacher;
+            assigment.BeginDate = entity.BeginDate;
+            assigment.EndDate = entity.EndDate;
+            return assigment;
+        }
         public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
-            await _context.Teachers.AddAsync(teacher);
+            var entity = ConvertTeacher(teacher);
+            await _context.Teachers.AddAsync(entity);
             await _context.SaveChangesAsync();
             return teacher;
 
@@ -34,33 +65,48 @@ namespace MoricApps.EPlatform.Contexts
             currentTeacher.PhoneNumber = teacher.PhoneNumber;
             currentTeacher.Email = teacher.Email;
             await _context.SaveChangesAsync();
-            return currentTeacher;
+            var temp = ConvertEntity(currentTeacher);
+            return temp;
         }
         public async Task<Teacher> DisactivateTeacherAsync(int Id)
         {
             var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == Id);
-            if(teacher == null)
+            if (teacher == null)
             {
                 return null;
             }
             teacher.Disactivate();
             await _context.SaveChangesAsync();
-            return teacher;
+            var temp = ConvertEntity(teacher);
+            return temp;
         }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
-            return await _context.Teachers.Skip((pageNo-1)*pageSize).Take(pageSize).ToListAsync();
-            
+            var teachers = await _context.Teachers.Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
+            List<Teacher> temp = new List<Teacher>();
+            foreach (var teacher in teachers)
+            {
+                temp.Add(ConvertEntity(teacher));
+            }
+            return temp;
+
         }
         public async Task<Teacher?> GetTeacherAsync(int Id)
         {
 
-            return await  _context.Teachers.FirstOrDefaultAsync(x => x.Id == Id);
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(x => x.Id == Id);
+            var temp = ConvertEntity(teacher);
+            return temp;
         }
         public async Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id)
         {
             var assigments = await _context.Assigments.Where(t => t.Id == Id).ToListAsync();
-            return assigments;
+            List<TeacherAssigment>? temp = new List<TeacherAssigment>();
+            foreach (var assigment in assigments)
+            {
+                temp.Add(ConvertAssigments(assigment));
+            }
+            return temp;
         }
     }
 
