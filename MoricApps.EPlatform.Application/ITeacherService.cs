@@ -7,10 +7,10 @@ namespace MoricApps.EPlatform.Teachers.Storage
     {
         Task<TeacherReturnDto> AddTeacher(TeacherInputDto teacher);
         Task<TeacherReturnDto> DeactivateTeacher(int id);
-        Task DeleteTeacher(int id);
+        Task<TeacherReturnDto> DeleteTeacher(int id);
         Task<TeacherReturnDto> GetTeacher(int id);
         Task<List<TeacherReturnDto>> GetTeachers(int pageSize, int pageNo);
         Task<TeacherReturnDto> ModifyTeacher(int id, TeacherInputDto teacher);
-        Task ReactivateTeacher(int id);
+        Task<TeacherReturnDto> ReactivateTeacher(int id);
     }
 }

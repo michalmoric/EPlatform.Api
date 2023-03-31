@@ -13,6 +13,10 @@ namespace MoricApps.EPlatform.Teachers.Storage
         Task<Teacher> ModyfyTeacherAsync(int Id, Teacher teacher);
 
         Task<Teacher> DisactivateTeacherAsync(int Id);
+
+        Task<Teacher> ReactivateTeacherAsync(int Id);
+
+        Task<Teacher> DeleteTeacherAsync(int Id);
         Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id);
     }
 }

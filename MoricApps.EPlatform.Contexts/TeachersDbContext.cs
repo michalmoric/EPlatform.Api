@@ -26,6 +26,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
                 {
                     Id = 1
                 });
+            modelBuilder.Entity<TeacherEntity>().HasQueryFilter(t => !t.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }

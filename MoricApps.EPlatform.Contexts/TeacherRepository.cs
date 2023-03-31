@@ -40,7 +40,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             if (entity == null) return null;
             TeacherAssigment assigment = new TeacherAssigment();
             assigment.Id = entity.Id;
-            assigment.Teacher=entity.Teacher;
+            assigment.Teacher=ConvertEntity(entity.Teacher);
             assigment.BeginDate = entity.BeginDate;
             assigment.EndDate = entity.EndDate;
             return assigment;
@@ -80,6 +80,30 @@ namespace MoricApps.EPlatform.Teachers.Storage
             var temp = ConvertEntity(teacher);
             return temp;
         }
+        public async Task<Teacher> ReactivateTeacherAsync(int Id)
+        {
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t=>t.Id == Id);
+            if(teacher == null)
+            {
+                return null;
+            }
+            teacher.Reactivate();
+            await _context.SaveChangesAsync();
+            var temp = ConvertEntity(teacher);
+            return temp;
+        }
+        public async Task<Teacher> DeleteTeacherAsync(int Id)
+        {
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t=>t.Id==Id);
+            if (teacher == null)
+            {
+                return null;
+            }
+            teacher.IsDeleted = true;
+            await _context.SaveChangesAsync();
+            var temp = ConvertEntity(teacher);
+            return temp;
+        }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
             var teachers = await _context.Teachers.Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -100,7 +124,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         }
         public async Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id)
         {
-            var assigments = await _context.Assigments.Where(t => t.Id == Id).ToListAsync();
+            var assigments = await _context.Assigments.IgnoreQueryFilters().Where(t => t.Teacher.Id == Id).ToListAsync();
             List<TeacherAssigment>? temp = new List<TeacherAssigment>();
             foreach (var assigment in assigments)
             {

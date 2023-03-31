@@ -11,7 +11,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Entities
     {
         public int Id { get; set; }
 
-        public virtual Teacher Teacher { get; set; }
+        public virtual TeacherEntity Teacher { get; set; }
 
         public DateTime BeginDate { get; set; }
 

@@ -61,5 +61,25 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             }
             return Ok(result);
         }
+        [HttpPatch("{id}/reactivate")]
+        public async Task<ActionResult<TeacherReturnDto>> ReactivateTeacher(int id)
+        {
+            var result = await _teacherService.ReactivateTeacher(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTeacher(int id)
+        {
+            var result = await _teacherService.DeleteTeacher(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }

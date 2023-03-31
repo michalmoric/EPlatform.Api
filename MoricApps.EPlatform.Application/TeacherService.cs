@@ -79,9 +79,31 @@ namespace MoricApps.EPlatform.Teachers.Storage
             modifyDto.PhoneNumber = result.PhoneNumber;
             return modifyDto;
         }
-        public async Task DeleteTeacher(int id)
+        public async Task<TeacherReturnDto> DeleteTeacher(int id)
         {
-            await Task.CompletedTask;// TODO Wyrejestruj nauczyciela
+            var assigments = await _repository.GetAssigmentsAsync(id);
+            if (!assigments.IsNullOrEmpty())
+            {
+                foreach (var assigment in assigments)
+                {
+                    if (assigment.EndDate > DateTime.Now)
+                    {
+                        return null;
+                    }
+                }
+            }
+            var teacher = await _repository.DeleteTeacherAsync(id);
+            if (teacher == null)
+            {
+                return null;
+            }
+            TeacherReturnDto deleteDto = new TeacherReturnDto();
+            deleteDto.Id = teacher.Id;
+            deleteDto.FirstName = teacher.FirstName;
+            deleteDto.LastName = teacher.LastName;
+            deleteDto.Email = teacher.Email;
+            deleteDto.PhoneNumber = teacher.PhoneNumber;
+            return deleteDto;
         }
         public async Task<TeacherReturnDto> DeactivateTeacher(int id)
         {
@@ -110,9 +132,22 @@ namespace MoricApps.EPlatform.Teachers.Storage
             deactDto.Status = teacher.Status;
             return deactDto;
         }
-        public async Task ReactivateTeacher(int id)
+        public async Task<TeacherReturnDto> ReactivateTeacher(int id)
         {
-            await Task.CompletedTask;// TODO Odwieś nauczyciela
+            var teacher = await _repository.ReactivateTeacherAsync(id);
+
+            if(teacher == null)
+            {
+                return null;
+            }
+            TeacherReturnDto reactDto = new TeacherReturnDto();
+            reactDto.Id = teacher.Id;
+            reactDto.FirstName = teacher.FirstName;
+            reactDto.LastName = teacher.LastName;
+            reactDto.Email = teacher.Email;
+            reactDto.PhoneNumber = teacher.PhoneNumber;
+            reactDto.Status = teacher.Status;
+            return reactDto;
         }
 
     }

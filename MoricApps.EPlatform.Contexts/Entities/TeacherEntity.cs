@@ -26,6 +26,8 @@ namespace MoricApps.EPlatform.Teachers.Storage.Entities
 
         public TeacherStatus Status { get; set; } = TeacherStatus.Active;
 
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<TeacherAssigment> Assigments { get; set; } = new List<TeacherAssigment>();
 
         public TeacherEntity(string firstName, string lastName, string email, string phoneNumber)
@@ -39,6 +41,10 @@ namespace MoricApps.EPlatform.Teachers.Storage.Entities
         public void Disactivate()
         {
             Status = TeacherStatus.Inactive;
+        }
+        public void Reactivate()
+        {
+            Status = TeacherStatus.Active;
         }
     }
 }
