@@ -21,11 +21,6 @@ namespace MoricApps.EPlatform.Teachers.Storage
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TeacherEntity>().HasData(
-                new TeacherEntity("Michal", "Moric", "michamoric@interia.pl", "+48694871704")
-                {
-                    Id = 1
-                });
             modelBuilder.Entity<TeacherEntity>().HasQueryFilter(t => !t.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }

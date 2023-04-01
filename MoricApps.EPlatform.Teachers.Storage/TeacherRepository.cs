@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoricApps.EPlatform.Teachers.Domain.Models;
-using MoricApps.EPlatform.Teachers.Storage;
-using MoricApps.EPlatform.Teachers.Storage.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MoricApps.EPlatform.Teachers.Storage.Mappers;
 
 namespace MoricApps.EPlatform.Teachers.Storage
 {
@@ -17,37 +11,9 @@ namespace MoricApps.EPlatform.Teachers.Storage
         {
             _context = context;
         }
-        private TeacherEntity ConvertTeacher(Teacher teacher)
-        {
-            if (teacher == null) return null;
-            TeacherEntity entity= new TeacherEntity(teacher.FirstName,teacher.LastName,teacher.Email,teacher.PhoneNumber);
-            entity.Id = teacher.Id;
-            entity.Status = teacher.Status;
-            return entity;
-
-        }
-        private Teacher ConvertEntity(TeacherEntity entity)
-        {
-            if (entity == null) return null;
-            Teacher teacher = new Teacher(entity.FirstName, entity.LastName, entity.Email, entity.PhoneNumber);
-            teacher.Id = entity.Id;
-            teacher.Status = entity.Status;
-            return teacher;
-
-        }
-        private TeacherAssigment ConvertAssigments(TeacherAssigmentEntity entity)
-        {
-            if (entity == null) return null;
-            TeacherAssigment assigment = new TeacherAssigment();
-            assigment.Id = entity.Id;
-            assigment.Teacher=ConvertEntity(entity.Teacher);
-            assigment.BeginDate = entity.BeginDate;
-            assigment.EndDate = entity.EndDate;
-            return assigment;
-        }
         public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
-            var entity = ConvertTeacher(teacher);
+            var entity = teacher.MapToEntity();
             await _context.Teachers.AddAsync(entity);
             await _context.SaveChangesAsync();
             return teacher;
@@ -65,8 +31,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             currentTeacher.PhoneNumber = teacher.PhoneNumber;
             currentTeacher.Email = teacher.Email;
             await _context.SaveChangesAsync();
-            var temp = ConvertEntity(currentTeacher);
-            return temp;
+            return currentTeacher.MapToModel();
         }
         public async Task<Teacher> DisactivateTeacherAsync(int Id)
         {
@@ -77,8 +42,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             }
             teacher.Disactivate();
             await _context.SaveChangesAsync();
-            var temp = ConvertEntity(teacher);
-            return temp;
+            return teacher.MapToModel();
         }
         public async Task<Teacher> ReactivateTeacherAsync(int Id)
         {
@@ -89,8 +53,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             }
             teacher.Reactivate();
             await _context.SaveChangesAsync();
-            var temp = ConvertEntity(teacher);
-            return temp;
+            return teacher.MapToModel();
         }
         public async Task<Teacher> DeleteTeacherAsync(int Id)
         {
@@ -101,8 +64,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             }
             teacher.IsDeleted = true;
             await _context.SaveChangesAsync();
-            var temp = ConvertEntity(teacher);
-            return temp;
+            return teacher.MapToModel();
         }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
@@ -110,7 +72,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             List<Teacher> temp = new List<Teacher>();
             foreach (var teacher in teachers)
             {
-                temp.Add(ConvertEntity(teacher));
+                temp.Add(teacher.MapToModel());
             }
             return temp;
 
@@ -119,16 +81,24 @@ namespace MoricApps.EPlatform.Teachers.Storage
         {
 
             var teacher = await _context.Teachers.FirstOrDefaultAsync(x => x.Id == Id);
-            var temp = ConvertEntity(teacher);
+            var temp = teacher.MapToModel();
             return temp;
         }
         public async Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id)
         {
-            var assigments = await _context.Assigments.IgnoreQueryFilters().Where(t => t.Teacher.Id == Id).ToListAsync();
-            List<TeacherAssigment>? temp = new List<TeacherAssigment>();
-            foreach (var assigment in assigments)
+            //var assigments = await _context.Assigments.IgnoreQueryFilters().Where(t => t.Teacher.Id == Id).ToListAsync();
+            //List<TeacherAssigment>? temp = new List<TeacherAssigment>();
+            //foreach (var assigment in assigments)
+            //{
+            //    temp.Add(ConvertAssigments(assigment));
+            //}
+            //return temp;
+            var assigments =  await _context.Teachers.Where(t => t.Id == Id).Select(e => e.Assigments).ToListAsync();
+            List<TeacherAssigment> temp = new List<TeacherAssigment>();
+            var ass = assigments.FirstOrDefault();
+            foreach(var assigment in ass)
             {
-                temp.Add(ConvertAssigments(assigment));
+                temp.Add(assigment.MapToModel());
             }
             return temp;
         }

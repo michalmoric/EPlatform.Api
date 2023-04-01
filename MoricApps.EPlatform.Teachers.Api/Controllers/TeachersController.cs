@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MoricApps.EPlatform.Teachers.Storage;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Contract;
+using MoricApps.EPlatform.Teachers.Application.Mapper;
 
 namespace MoricApps.EPlatform.Teachers.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             _teacherService = teacherService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<TeacherReturnDto>>> GetTeachersAction([FromQuery] int pageSize, [FromQuery] int pageNo)
+        public async Task<ActionResult<List<TeacherReturnDto>>> GetTeachers([FromQuery] int pageSize, [FromQuery] int pageNo)
         {
             if (pageSize <= 0 && pageNo <= 0)
             {
@@ -27,7 +28,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             return Ok(await _teacherService.GetTeachers(pageSize, pageNo));
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<TeacherReturnDto>> GetTeacherAction(int id)
+        public async Task<ActionResult<TeacherReturnDto>> GetTeacher(int id)
         {
             var result = await _teacherService.GetTeacher(id);
             if (result == null)
@@ -36,15 +37,16 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             }
             return Ok(result);
         }
-        [HttpPost("add")]
-        public async Task<ActionResult<TeacherReturnDto>> AddTeacherAction(TeacherInputDto teacher)
+        [HttpPost]
+        public async Task<ActionResult<TeacherReturnDto>> AddTeacher(TeacherInputDto teacher)
         {
-            return Ok(await _teacherService.AddTeacher(teacher));
+            
+            return Ok(await _teacherService.AddTeacher(teacher.MapToModel()));
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<TeacherReturnDto>> ModyfyTeacherAction(int id, TeacherInputDto teacher)
+        public async Task<ActionResult<TeacherReturnDto>> ModyfyTeacher(int id, TeacherInputDto teacher)
         {
-            var result = await _teacherService.ModifyTeacher(id, teacher);
+            var result = await _teacherService.ModifyTeacher(id, teacher.MapToModel());
             if (result == null)
             {
                 return NotFound();

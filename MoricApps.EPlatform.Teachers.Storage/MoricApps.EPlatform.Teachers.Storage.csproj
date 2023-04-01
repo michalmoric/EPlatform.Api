@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Teachers.Storage.csproj" />
-    <ProjectReference Include="..\MoricApps.EPlatform.Domain\MoricApps.EPlatform.Teachers.Domain.csproj" />
-    <ProjectReference Include="..\MoricApps.EPlatform.Dtos\MoricApps.EPlatform.Teachers.Contract.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Domain\MoricApps.EPlatform.Teachers.Domain.csproj" />
   </ItemGroup>
 
 </Project>

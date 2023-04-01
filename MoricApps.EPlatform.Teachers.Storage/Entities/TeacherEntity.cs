@@ -28,7 +28,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Entities
 
         public bool IsDeleted { get; set; } = false;
 
-        public virtual ICollection<TeacherAssigment> Assigments { get; set; } = new List<TeacherAssigment>();
+        public virtual ICollection<TeacherAssigmentEntity> Assigments { get; set; } = new List<TeacherAssigmentEntity>();
 
         public TeacherEntity(string firstName, string lastName, string email, string phoneNumber)
         {

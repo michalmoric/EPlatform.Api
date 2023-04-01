@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Contract\MoricApps.EPlatform.Teachers.Contract.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Domain\MoricApps.EPlatform.Teachers.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoricApps.EPlatform.Application\MoricApps.EPlatform.Teachers.Application.csproj" />
-    <ProjectReference Include="..\MoricApps.EPlatform.Contexts\MoricApps.EPlatform.Teachers.Storage.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Application\MoricApps.EPlatform.Teachers.Application.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Storage\MoricApps.EPlatform.Teachers.Storage.csproj" />
   </ItemGroup>
 
 </Project>
