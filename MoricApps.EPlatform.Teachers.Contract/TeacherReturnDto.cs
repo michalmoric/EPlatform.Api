@@ -1,9 +1,4 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoricApps.EPlatform.Teachers.Contract
 {
@@ -17,7 +12,7 @@ namespace MoricApps.EPlatform.Teachers.Contract
         public string Email { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
 
-        ICollection<TeacherAssigment> Assigments { get; set; } = null!;
+        public ICollection<AssigmentDto> Assigments { get; set; } = null!;
 
         public TeacherStatus Status { get; set; }
     }

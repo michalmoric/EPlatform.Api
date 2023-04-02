@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoricApps.EPlatform.Teachers.Storage;
 
@@ -11,9 +12,11 @@ using MoricApps.EPlatform.Teachers.Storage;
 namespace MoricApps.EPlatform.Contexts.Migrations
 {
     [DbContext(typeof(TeachersDbContext))]
-    partial class TeachersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230402104032_PlzJustWork")]
+    partial class PlzJustWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace MoricApps.EPlatform.Contexts.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Assigments", (string)null);
+                    b.ToTable("Assigments");
                 });
 
             modelBuilder.Entity("MoricApps.EPlatform.Teachers.Storage.Entities.TeacherEntity", b =>
@@ -78,7 +81,7 @@ namespace MoricApps.EPlatform.Contexts.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("MoricApps.EPlatform.Teachers.Storage.Entities.TeacherAssigmentEntity", b =>

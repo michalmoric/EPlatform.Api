@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Storage.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoricApps.EPlatform.Teachers.Storage
 {
@@ -21,6 +15,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TeacherEntity>().HasMany(t => t.Assigments).WithOne(a => a.Teacher);
             modelBuilder.Entity<TeacherEntity>().HasQueryFilter(t => !t.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }

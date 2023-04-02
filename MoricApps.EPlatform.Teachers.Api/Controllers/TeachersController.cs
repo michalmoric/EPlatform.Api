@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MoricApps.EPlatform.Teachers.Storage;
-using MoricApps.EPlatform.Teachers.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Application.Mapper;
+using MoricApps.EPlatform.Teachers.Application.Services;
 
 namespace MoricApps.EPlatform.Teachers.Api.Controllers
 {
-    // Tutaj zwracam dane na zewnątrz
     [Route("api/teachers")]
     [ApiController]
     public class TeachersController : ControllerBase

@@ -1,11 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MoricApps.EPlatform.Teachers.Application.Mapper;
+using MoricApps.EPlatform.Teachers.Application.Repositories;
 using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Storage
+namespace MoricApps.EPlatform.Teachers.Application.Services
 {
-    public class TeacherService : ITeacherService // Logika przetwarzająca dane idące z lub do bazy
+    public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _repository;
         public TeacherService(ITeacherRepository repository)
@@ -34,7 +35,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         public async Task<TeacherReturnDto> AddTeacher(Teacher teacher)
         {
             var result = await _repository.AddTeacherAsync(teacher);
-            if(result == null)
+            if (result == null)
             {
                 return null;
             }
@@ -93,7 +94,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         {
             var teacher = await _repository.ReactivateTeacherAsync(id);
 
-            if(teacher == null)
+            if (teacher == null)
             {
                 return null;
             }

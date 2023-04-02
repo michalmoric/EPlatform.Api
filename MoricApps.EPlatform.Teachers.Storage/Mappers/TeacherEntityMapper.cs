@@ -1,10 +1,5 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Storage.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoricApps.EPlatform.Teachers.Storage.Mappers
 {
@@ -17,7 +12,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
             {
                 coll.Add(assigment.MapToModel());
             }
-            return new Teacher(entity.FirstName, entity.LastName,entity.Email,entity.PhoneNumber,coll);
+            return new Teacher(entity.Id,entity.FirstName, entity.LastName,entity.Email,entity.PhoneNumber,coll,entity.Status);
         }
         public static TeacherEntity MapToEntity(this Teacher entity) 
         {
@@ -26,7 +21,15 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
             {
                 coll.Add(assigment.MapToEntity());
             }
-            return new TeacherEntity(entity.FirstName, entity.LastName, entity.Email, entity.PhoneNumber);// coll);
+            return new TeacherEntity()
+            {
+                Id= entity.Id,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                Email = entity.Email,
+                PhoneNumber = entity.PhoneNumber,
+                Assigments = coll
+            };
         }
     }
 }

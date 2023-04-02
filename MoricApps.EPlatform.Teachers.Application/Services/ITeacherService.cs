@@ -1,7 +1,7 @@
 ﻿using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Storage
+namespace MoricApps.EPlatform.Teachers.Application.Services
 {
     public interface ITeacherService
     {

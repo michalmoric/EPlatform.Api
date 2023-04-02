@@ -1,6 +1,6 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Storage
+namespace MoricApps.EPlatform.Teachers.Application.Repositories
 {
     public interface ITeacherRepository
     {

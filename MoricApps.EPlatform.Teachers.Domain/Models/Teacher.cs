@@ -15,14 +15,24 @@
 
         public virtual ICollection<TeacherAssigment> Assigments { get;} = new List<TeacherAssigment>();
 
-        public Teacher(string firstName, string lastName, string email, string phoneNumber,ICollection<TeacherAssigment> assigments)
+        public Teacher(int id, string firstName, string lastName, string email, string phoneNumber,ICollection<TeacherAssigment> assigments,TeacherStatus status)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Assigments = assigments;
+            Status = status;
+
+        }
+        public Teacher(string firstName, string lastName, string email, string phoneNumber, ICollection<TeacherAssigment> assigments)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
             Assigments = assigments;
-
         }
         public void Disactivate()
         {

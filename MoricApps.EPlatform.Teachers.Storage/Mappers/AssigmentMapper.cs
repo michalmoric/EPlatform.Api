@@ -1,10 +1,5 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Storage.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoricApps.EPlatform.Teachers.Storage.Mappers
 {

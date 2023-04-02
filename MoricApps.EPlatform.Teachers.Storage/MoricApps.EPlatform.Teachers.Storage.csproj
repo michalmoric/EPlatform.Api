@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Domain\MoricApps.EPlatform.Teachers.Domain.csproj" />
+    <ProjectReference Include="..\MoricApps.EPlatform.Teachers.Application\MoricApps.EPlatform.Teachers.Application.csproj" />
   </ItemGroup>
 
 </Project>

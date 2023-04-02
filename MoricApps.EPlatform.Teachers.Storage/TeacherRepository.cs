@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoricApps.EPlatform.Teachers.Application.Repositories;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Storage.Mappers;
 
@@ -21,7 +22,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         }
         public async Task<Teacher> ModyfyTeacherAsync(int Id, Teacher teacher)
         {
-            var currentTeacher = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == Id);
+            var currentTeacher = await _context.Teachers.Include(t =>t.Assigments).FirstOrDefaultAsync(t => t.Id == Id);
             if (currentTeacher == null)
             {
                 return null;
@@ -30,12 +31,17 @@ namespace MoricApps.EPlatform.Teachers.Storage
             currentTeacher.LastName = teacher.LastName;
             currentTeacher.PhoneNumber = teacher.PhoneNumber;
             currentTeacher.Email = teacher.Email;
+            currentTeacher.Assigments.Clear();
+            foreach(var assigment in teacher.Assigments)
+            {
+                currentTeacher.Assigments.Add(assigment.MapToEntity());
+            }
             await _context.SaveChangesAsync();
             return currentTeacher.MapToModel();
         }
         public async Task<Teacher> DisactivateTeacherAsync(int Id)
         {
-            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == Id);
+            var teacher = await _context.Teachers.Include(t =>t.Assigments).FirstOrDefaultAsync(t => t.Id == Id);
             if (teacher == null)
             {
                 return null;
@@ -46,7 +52,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         }
         public async Task<Teacher> ReactivateTeacherAsync(int Id)
         {
-            var teacher = await _context.Teachers.FirstOrDefaultAsync(t=>t.Id == Id);
+            var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id == Id);
             if(teacher == null)
             {
                 return null;
@@ -57,7 +63,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         }
         public async Task<Teacher> DeleteTeacherAsync(int Id)
         {
-            var teacher = await _context.Teachers.FirstOrDefaultAsync(t=>t.Id==Id);
+            var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id==Id);
             if (teacher == null)
             {
                 return null;
@@ -68,7 +74,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         }
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
-            var teachers = await _context.Teachers.Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
+            var teachers = await _context.Teachers.Include(t => t.Assigments).Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
             List<Teacher> temp = new List<Teacher>();
             foreach (var teacher in teachers)
             {
@@ -80,7 +86,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         public async Task<Teacher?> GetTeacherAsync(int Id)
         {
 
-            var teacher = await _context.Teachers.FirstOrDefaultAsync(x => x.Id == Id);
+            var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(x => x.Id == Id);
             var temp = teacher.MapToModel();
             return temp;
         }

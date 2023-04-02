@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using MoricApps.EPlatform.Teachers.Application.Repositories;
+using MoricApps.EPlatform.Teachers.Application.Services;
 using MoricApps.EPlatform.Teachers.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
