@@ -1,7 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using MoricApps.EPlatform.Teachers.Application.Mapper;
 using MoricApps.EPlatform.Teachers.Application.Repositories;
-using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
 namespace MoricApps.EPlatform.Teachers.Application.Services
@@ -13,92 +11,83 @@ namespace MoricApps.EPlatform.Teachers.Application.Services
         {
             _repository = repository;
         }
-        public async Task<List<TeacherReturnDto>> GetTeachers(int pageSize, int pageNo)
+
+        public async Task<List<Teacher>> GetTeachers(int pageSize, int pageNo)
         {
             var teachers = await _repository.GetTeachersAsync(pageSize, pageNo);
-            List<TeacherReturnDto> getDtoList = new List<TeacherReturnDto>();
+            List<Teacher> getDtoList = new List<Teacher>();
             foreach (var teacher in teachers)
             {
-                getDtoList.Add(teacher.MapToDto());
+                getDtoList.Add(teacher);
             }
             return getDtoList;
         }
-        public async Task<TeacherReturnDto> GetTeacher(int id)
+
+        public async Task<Teacher> GetTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
             {
                 return null;
             }
-            return teacher.MapToDto();
+            return teacher;
         }
-        public async Task<TeacherReturnDto> AddTeacher(Teacher teacher)
+
+        public async Task<Teacher> AddTeacher(Teacher teacher)
         {
             var result = await _repository.AddTeacherAsync(teacher);
             if (result == null)
             {
                 return null;
             }
-            return result.MapToDto();
+            return result;
         }
-        public async Task<TeacherReturnDto> ModifyTeacher(int id, Teacher teacher)
+
+        public async Task<Teacher> UpdateTeacher(int id, Teacher teacher)
         {
-            var result = await _repository.ModyfyTeacherAsync(id, teacher);
+            var result = await _repository.UpdateTeacherAsync(id, teacher);
             if (result == null)
             {
                 return null;
             }
-            return result.MapToDto();
+            return result;
         }
-        public async Task<TeacherReturnDto> DeleteTeacher(int id)
+
+        public async Task<Teacher> DeleteTeacher(int id)
         {
-            var assigments = await _repository.GetAssigmentsAsync(id);
-            if (!assigments.IsNullOrEmpty())
-            {
-                foreach (var assigment in assigments)
-                {
-                    if (assigment.EndDate > DateTime.Now)
-                    {
-                        return null;
-                    }
-                }
-            }
-            var teacher = await _repository.DeleteTeacherAsync(id);
+            var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
             {
                 return null;
             }
-            return teacher.MapToDto();
+            var updateResult = teacher.Delete();
+            var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            return result;
         }
-        public async Task<TeacherReturnDto> DeactivateTeacher(int id)
+
+        public async Task<Teacher> DeactivateTeacher(int id)
         {
-            var assigments = await _repository.GetAssigmentsAsync(id);
-            if (!assigments.IsNullOrEmpty())
-            {
-                foreach (var assigment in assigments)
-                {
-                    if (assigment.EndDate > DateTime.Now)
-                    {
-                        return null;
-                    }
-                }
-            }
-            var teacher = await _repository.DisactivateTeacherAsync(id);
+            var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
             {
                 return null;
             }
-            return teacher.MapToDto();
+            var updateResult = teacher.Disactivate();
+            var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            return result;
         }
-        public async Task<TeacherReturnDto> ReactivateTeacher(int id)
+
+        public async Task<Teacher> ReactivateTeacher(int id)
         {
-            var teacher = await _repository.ReactivateTeacherAsync(id);
+            var teacher = await _repository.GetTeacherAsync(id);
 
             if (teacher == null)
             {
                 return null;
             }
-            return teacher.MapToDto();
+            var updateResult = teacher.Reactivate();
+            var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            return result;
         }
 
     }

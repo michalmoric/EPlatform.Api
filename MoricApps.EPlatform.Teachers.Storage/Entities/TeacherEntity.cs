@@ -1,6 +1,7 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MoricApps.EPlatform.Teachers.Storage.Entities
 {
@@ -30,13 +31,6 @@ namespace MoricApps.EPlatform.Teachers.Storage.Entities
             
 
         }
-        public void Disactivate()
-        {
-            Status = TeacherStatus.Inactive;
-        }
-        public void Reactivate()
-        {
-            Status = TeacherStatus.Active;
-        }
+
     }
 }

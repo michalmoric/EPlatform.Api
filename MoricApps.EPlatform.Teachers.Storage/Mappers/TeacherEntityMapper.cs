@@ -12,7 +12,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
             {
                 coll.Add(assigment.MapToModel());
             }
-            return new Teacher(entity.Id,entity.FirstName, entity.LastName,entity.Email,entity.PhoneNumber,coll,entity.Status);
+            return new Teacher(entity.Id,entity.FirstName, entity.LastName,entity.Email,entity.PhoneNumber,coll,entity.Status,entity.IsDeleted);
         }
         public static TeacherEntity MapToEntity(this Teacher entity) 
         {
@@ -28,7 +28,9 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
                 LastName = entity.LastName,
                 Email = entity.Email,
                 PhoneNumber = entity.PhoneNumber,
-                Assigments = coll
+                Assigments = coll,
+                Status= entity.Status,
+                IsDeleted= entity.IsDeleted
             };
         }
     }

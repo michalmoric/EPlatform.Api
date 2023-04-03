@@ -10,10 +10,12 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
     public class TeachersController : ControllerBase
     {
         private readonly ITeacherService _teacherService;
+
         public TeachersController(ITeacherService teacherService)
         {
             _teacherService = teacherService;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<TeacherReturnDto>>> GetTeachers([FromQuery] int pageSize, [FromQuery] int pageNo)
         {
@@ -21,9 +23,17 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             {
                 return BadRequest();
             }
+            
 
-            return Ok(await _teacherService.GetTeachers(pageSize, pageNo));
+            var teachers = await _teacherService.GetTeachers(pageSize, pageNo);
+            List<TeacherReturnDto> results = new List<TeacherReturnDto>();
+            foreach( var teacher in teachers)
+            {
+                results.Add(teacher.MapToDto());
+            }
+            return Ok(results);
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<TeacherReturnDto>> GetTeacher(int id)
         {
@@ -32,24 +42,27 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result.MapToDto());
         }
+
         [HttpPost]
         public async Task<ActionResult<TeacherReturnDto>> AddTeacher(TeacherInputDto teacher)
         {
             
             return Ok(await _teacherService.AddTeacher(teacher.MapToModel()));
         }
+
         [HttpPut("{id}")]
-        public async Task<ActionResult<TeacherReturnDto>> ModyfyTeacher(int id, TeacherInputDto teacher)
+        public async Task<ActionResult<TeacherReturnDto>> UpdateTeacher(int id, TeacherInputDto teacher)
         {
-            var result = await _teacherService.ModifyTeacher(id, teacher.MapToModel());
+            var result = await _teacherService.UpdateTeacher(id, teacher.MapToModel());
             if (result == null)
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result.MapToDto());
         }
+
         [HttpPatch("{id}/deactivate")]
         public async Task<ActionResult<TeacherReturnDto>> DeactivateTeacher(int id)
         {
@@ -58,8 +71,9 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result.MapToDto());
         }
+
         [HttpPatch("{id}/reactivate")]
         public async Task<ActionResult<TeacherReturnDto>> ReactivateTeacher(int id)
         {
@@ -68,8 +82,9 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result.MapToDto());
         }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTeacher(int id)
         {

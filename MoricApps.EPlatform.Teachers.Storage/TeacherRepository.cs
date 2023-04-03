@@ -12,6 +12,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
         {
             _context = context;
         }
+
         public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
             var entity = teacher.MapToEntity();
@@ -20,10 +21,11 @@ namespace MoricApps.EPlatform.Teachers.Storage
             return teacher;
 
         }
-        public async Task<Teacher> ModyfyTeacherAsync(int Id, Teacher teacher)
+
+        public async Task<Teacher> UpdateTeacherAsync(int Id, Teacher teacher)
         {
             var currentTeacher = await _context.Teachers.Include(t =>t.Assigments).FirstOrDefaultAsync(t => t.Id == Id);
-            if (currentTeacher == null)
+            if (currentTeacher == null || teacher == null)
             {
                 return null;
             }
@@ -31,6 +33,8 @@ namespace MoricApps.EPlatform.Teachers.Storage
             currentTeacher.LastName = teacher.LastName;
             currentTeacher.PhoneNumber = teacher.PhoneNumber;
             currentTeacher.Email = teacher.Email;
+            currentTeacher.IsDeleted = teacher.IsDeleted;
+            currentTeacher.Status = teacher.Status;
             currentTeacher.Assigments.Clear();
             foreach(var assigment in teacher.Assigments)
             {
@@ -39,39 +43,43 @@ namespace MoricApps.EPlatform.Teachers.Storage
             await _context.SaveChangesAsync();
             return currentTeacher.MapToModel();
         }
-        public async Task<Teacher> DisactivateTeacherAsync(int Id)
-        {
-            var teacher = await _context.Teachers.Include(t =>t.Assigments).FirstOrDefaultAsync(t => t.Id == Id);
-            if (teacher == null)
-            {
-                return null;
-            }
-            teacher.Disactivate();
-            await _context.SaveChangesAsync();
-            return teacher.MapToModel();
-        }
-        public async Task<Teacher> ReactivateTeacherAsync(int Id)
-        {
-            var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id == Id);
-            if(teacher == null)
-            {
-                return null;
-            }
-            teacher.Reactivate();
-            await _context.SaveChangesAsync();
-            return teacher.MapToModel();
-        }
-        public async Task<Teacher> DeleteTeacherAsync(int Id)
-        {
-            var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id==Id);
-            if (teacher == null)
-            {
-                return null;
-            }
-            teacher.IsDeleted = true;
-            await _context.SaveChangesAsync();
-            return teacher.MapToModel();
-        }
+
+        //public async Task<Teacher> DisactivateTeacherAsync(int Id)
+        //{
+        //    var teacher = await _context.Teachers.Include(t =>t.Assigments).FirstOrDefaultAsync(t => t.Id == Id);
+        //    if (teacher == null)
+        //    {
+        //        return null;
+        //    }
+        //    teacher.Disactivate();
+        //    await _context.SaveChangesAsync();
+        //    return teacher.MapToModel();
+        //}
+
+        //public async Task<Teacher> ReactivateTeacherAsync(int Id)
+        //{
+        //    var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id == Id);
+        //    if(teacher == null)
+        //    {
+        //        return null;
+        //    }
+        //    teacher.Reactivate();
+        //    await _context.SaveChangesAsync();
+        //    return teacher.MapToModel();
+        //}
+
+        //public async Task<Teacher> DeleteTeacherAsync(int Id)
+        //{
+        //    var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(t=>t.Id==Id);
+        //    if (teacher == null)
+        //    {
+        //        return null;
+        //    }
+        //    teacher.IsDeleted = true;
+        //    await _context.SaveChangesAsync();
+        //    return teacher.MapToModel();
+        //}
+
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
             var teachers = await _context.Teachers.Include(t => t.Assigments).Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -83,6 +91,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             return temp;
 
         }
+
         public async Task<Teacher?> GetTeacherAsync(int Id)
         {
 
@@ -90,6 +99,7 @@ namespace MoricApps.EPlatform.Teachers.Storage
             var temp = teacher.MapToModel();
             return temp;
         }
+
         public async Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id)
         {
             //var assigments = await _context.Assigments.IgnoreQueryFilters().Where(t => t.Teacher.Id == Id).ToListAsync();
