@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoricApps.EPlatform.Teachers.Application.Repositories;
+using MoricApps.EPlatform.Teachers.Api.Repositories;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 using MoricApps.EPlatform.Teachers.Storage.Mappers;
 

@@ -1,6 +1,6 @@
 ﻿using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Application.Services
+namespace MoricApps.EPlatform.Teachers.Api.Services
 {
     public interface ITeacherService
     {

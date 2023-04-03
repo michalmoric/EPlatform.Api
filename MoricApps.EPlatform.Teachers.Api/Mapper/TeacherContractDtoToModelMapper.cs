@@ -1,7 +1,7 @@
 ﻿using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Application.Mapper
+namespace MoricApps.EPlatform.Teachers.Api.Mapper
 {
     public static class TeacherContractDtoToModelMapper
     {

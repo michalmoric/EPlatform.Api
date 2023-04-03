@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using MoricApps.EPlatform.Teachers.Application.Repositories;
+using MoricApps.EPlatform.Teachers.Api.Repositories;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Application.Services
+namespace MoricApps.EPlatform.Teachers.Api.Services
 {
     public class TeacherService : ITeacherService
     {
