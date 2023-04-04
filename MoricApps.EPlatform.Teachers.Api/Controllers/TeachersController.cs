@@ -2,6 +2,7 @@
 using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Api.Mapper;
 using MoricApps.EPlatform.Teachers.Api.Services;
+using MoricApps.EPlatform.Teachers.Domain.Exeptions;
 
 namespace MoricApps.EPlatform.Teachers.Api.Controllers
 {
@@ -66,12 +67,19 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
         [HttpPatch("{id}/deactivate")]
         public async Task<ActionResult<TeacherReturnDto>> DeactivateTeacher(int id)
         {
-            var result = await _teacherService.DeactivateTeacher(id);
-            if (result == null)
+            try
             {
-                return NotFound();
+                var result = await _teacherService.DeactivateTeacher(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result.MapToDto());
             }
-            return Ok(result.MapToDto());
+            catch(TeacherDeactivateExeption ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch("{id}/reactivate")]
@@ -88,12 +96,19 @@ namespace MoricApps.EPlatform.Teachers.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTeacher(int id)
         {
-            var result = await _teacherService.DeleteTeacher(id);
-            if(result == null)
+            try
             {
-                return NotFound();
+                var result = await _teacherService.DeleteTeacher(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch(TeacherDeleteExeption ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

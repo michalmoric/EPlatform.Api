@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using MoricApps.EPlatform.Teachers.Domain.Exeptions;
 
 namespace MoricApps.EPlatform.Teachers.Domain.Models
 {
@@ -46,7 +47,7 @@ namespace MoricApps.EPlatform.Teachers.Domain.Models
                 {
                     if (assigment.EndDate > DateTime.Now)
                     {
-                        return null;
+                        throw new TeacherDeactivateExeption();
                     }
                 }
             }
@@ -68,7 +69,7 @@ namespace MoricApps.EPlatform.Teachers.Domain.Models
                 {
                     if (assigment.EndDate > DateTime.Now)
                     {
-                        return null;
+                        throw new TeacherDeleteExeption();
                     }
                 }
             }

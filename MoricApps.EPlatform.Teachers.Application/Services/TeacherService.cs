@@ -23,7 +23,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return getDtoList;
         }
 
-        public async Task<Teacher> GetTeacher(int id)
+        public async Task<Teacher?> GetTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
@@ -33,7 +33,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return teacher;
         }
 
-        public async Task<Teacher> AddTeacher(Teacher teacher)
+        public async Task<Teacher?> AddTeacher(Teacher teacher)
         {
             var result = await _repository.AddTeacherAsync(teacher);
             if (result == null)
@@ -43,7 +43,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return result;
         }
 
-        public async Task<Teacher> UpdateTeacher(int id, Teacher teacher)
+        public async Task<Teacher?> UpdateTeacher(int id, Teacher teacher)
         {
             var result = await _repository.UpdateTeacherAsync(id, teacher);
             if (result == null)
@@ -53,7 +53,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return result;
         }
 
-        public async Task<Teacher> DeleteTeacher(int id)
+        public async Task<Teacher?> DeleteTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
@@ -65,7 +65,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return result;
         }
 
-        public async Task<Teacher> DeactivateTeacher(int id)
+        public async Task<Teacher?> DeactivateTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
             if (teacher == null)
@@ -77,7 +77,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             return result;
         }
 
-        public async Task<Teacher> ReactivateTeacher(int id)
+        public async Task<Teacher?> ReactivateTeacher(int id)
         {
             var teacher = await _repository.GetTeacherAsync(id);
 

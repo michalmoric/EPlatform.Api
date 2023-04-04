@@ -12,11 +12,5 @@ namespace MoricApps.EPlatform.Teachers.Api.Repositories
 
         Task<Teacher> UpdateTeacherAsync(int Id, Teacher teacher);
 
-        //Task<Teacher> DisactivateTeacherAsync(int Id);
-
-        //Task<Teacher> ReactivateTeacherAsync(int Id);
-
-        //Task<Teacher> DeleteTeacherAsync(int Id);
-        //Task<IEnumerable<TeacherAssigment>?> GetAssigmentsAsync(int Id);
     }
 }
