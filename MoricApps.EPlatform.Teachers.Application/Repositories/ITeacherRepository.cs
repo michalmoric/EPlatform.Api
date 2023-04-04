@@ -4,7 +4,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Repositories
 {
     public interface ITeacherRepository
     {
-        Task<Teacher> AddTeacherAsync(Teacher teacher);
+        Task<Teacher?> AddTeacherAsync(Teacher teacher);
 
         Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo);
 
