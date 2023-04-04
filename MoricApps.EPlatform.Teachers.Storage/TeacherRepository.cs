@@ -47,12 +47,12 @@ namespace MoricApps.EPlatform.Teachers.Storage
         public async Task<List<Teacher>> GetTeachersAsync(int pageSize, int pageNo)
         {
             var teachers = await _context.Teachers.Include(t => t.Assigments).Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
-            List<Teacher> temp = new List<Teacher>();
+            List<Teacher> teacherList = new List<Teacher>();
             foreach (var teacher in teachers)
             {
-                temp.Add(teacher.MapToModel());
+                teacherList.Add(teacher.MapToModel());
             }
-            return temp;
+            return teacherList;
 
         }
 
@@ -60,8 +60,8 @@ namespace MoricApps.EPlatform.Teachers.Storage
         {
 
             var teacher = await _context.Teachers.Include(t => t.Assigments).FirstOrDefaultAsync(x => x.Id == Id);
-            var temp = teacher.MapToModel();
-            return temp;
+            var teacherModel = teacher.MapToModel();
+            return teacherModel;
         }
     }
 

@@ -7,19 +7,19 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
     {
         public static Teacher MapToModel(this TeacherInputDto dto)
         {
-            List<TeacherAssigment> temp = new List<TeacherAssigment>();
+            List<TeacherAssigment> teacherAssigments = new List<TeacherAssigment>();
             foreach(var assigment in dto.Assigments)
             {
-                temp.Add(new TeacherAssigment(assigment.Id,assigment.BeginDate,assigment.EndDate));
+                teacherAssigments.Add(new TeacherAssigment(assigment.Id,assigment.BeginDate,assigment.EndDate));
             }
-            return new Teacher(dto.FirstName,dto.LastName,dto.Email,dto.PhoneNumber,temp);
+            return new Teacher(dto.FirstName,dto.LastName,dto.Email,dto.PhoneNumber,teacherAssigments);
         }
         public static TeacherReturnDto MapToDto(this Teacher model) 
         {
-            List<AssigmentDto> temp = new List<AssigmentDto>();
+            List<AssigmentDto> assigmentDtos = new List<AssigmentDto>();
             foreach(var assigment in model.Assigments)
             {
-                temp.Add(new AssigmentDto()
+                assigmentDtos.Add(new AssigmentDto()
                 {
                     BeginDate = assigment.BeginDate,
                     EndDate = assigment.EndDate
@@ -33,7 +33,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 Status = model.Status,
-                Assigments = temp
+                Assigments = assigmentDtos
  
 
             };
