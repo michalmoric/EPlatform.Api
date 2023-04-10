@@ -1,15 +1,16 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using MoricApps.EPlatform.Teachers.Api.Repositories;
+﻿using MoricApps.EPlatform.Teachers.Api.Repositories;
 using MoricApps.EPlatform.Teachers.Domain.Models;
 
-namespace MoricApps.EPlatform.Teachers.Api.Services
+namespace MoricApps.EPlatform.Teachers.Application.Services
 {
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _repository;
-        public TeacherService(ITeacherRepository repository)
+        private readonly IEmailService _emailService;
+        public TeacherService(ITeacherRepository repository,IEmailService emailService)
         {
             _repository = repository;
+            _emailService = emailService;
         }
 
         public async Task<List<Teacher>> GetTeachers(int pageSize, int pageNo)
@@ -40,6 +41,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             {
                 return null;
             }
+            _emailService.SendEmailAsync(teacher, EmailTypes.Add);
             return result;
         }
 
@@ -50,6 +52,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             {
                 return null;
             }
+            _emailService.SendEmailAsync(result, EmailTypes.Update);
             return result;
         }
 
@@ -62,6 +65,10 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             }
             var updateResult = teacher.Delete();
             var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            if (result != null)
+            {
+                _emailService.SendEmailAsync(result,EmailTypes.Delete);
+            }
             return result;
         }
 
@@ -74,6 +81,10 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             }
             var updateResult = teacher.Disactivate();
             var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            if (result != null)
+            {
+                _emailService.SendEmailAsync(result, EmailTypes.Deactivate);
+            }
             return result;
         }
 
@@ -87,6 +98,10 @@ namespace MoricApps.EPlatform.Teachers.Api.Services
             }
             var updateResult = teacher.Reactivate();
             var result = await _repository.UpdateTeacherAsync(id, updateResult);
+            if (result != null)
+            {
+                _emailService.SendEmailAsync(result, EmailTypes.Reactivate);
+            }
             return result;
         }
 

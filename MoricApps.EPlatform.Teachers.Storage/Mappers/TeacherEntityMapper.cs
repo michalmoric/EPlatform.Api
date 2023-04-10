@@ -7,6 +7,10 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
     {
         public static Teacher MapToModel(this TeacherEntity entity)
         {
+            if(entity == null)
+            {
+                return null;
+            }
             List<TeacherAssigment> coll = new List<TeacherAssigment>();
             foreach (var assigment in entity.Assigments)
             {
@@ -17,6 +21,10 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
         public static TeacherEntity MapToEntity(this Teacher entity) 
         {
             List<TeacherAssigmentEntity> coll = new List<TeacherAssigmentEntity>();
+            if(entity == null)
+            {
+                return null;
+            }
             foreach (var assigment in entity.Assigments)
             {
                 coll.Add(assigment.MapToEntity());

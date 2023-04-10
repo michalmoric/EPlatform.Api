@@ -8,6 +8,10 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
         public static Teacher MapToModel(this TeacherInputDto dto)
         {
             List<TeacherAssigment> teacherAssigments = new List<TeacherAssigment>();
+            if(dto == null)
+            {
+                return null;
+            }
             foreach(var assigment in dto.Assigments)
             {
                 teacherAssigments.Add(new TeacherAssigment(assigment.Id,assigment.BeginDate,assigment.EndDate));
@@ -16,6 +20,10 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
         }
         public static TeacherReturnDto MapToDto(this Teacher model) 
         {
+            if(model == null)
+            {
+                return null;
+            }
             List<AssigmentDto> assigmentDtos = new List<AssigmentDto>();
             foreach(var assigment in model.Assigments)
             {

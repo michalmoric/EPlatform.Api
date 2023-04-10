@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MoricApps.EPlatform.Teachers.Api.Repositories;
-using MoricApps.EPlatform.Teachers.Api.Services;
+using MoricApps.EPlatform.Teachers.Application.Services;
 using MoricApps.EPlatform.Teachers.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +15,7 @@ builder.Services.AddDbContext<TeachersDbContext>(
     DbContextOptions => DbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:TeachersConnectionString"]));
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

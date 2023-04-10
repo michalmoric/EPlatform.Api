@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Api.Mapper;
-using MoricApps.EPlatform.Teachers.Api.Services;
+using MoricApps.EPlatform.Teachers.Application.Services;
 using MoricApps.EPlatform.Teachers.Domain.Exeptions;
 
 namespace MoricApps.EPlatform.Teachers.Api.Controllers
