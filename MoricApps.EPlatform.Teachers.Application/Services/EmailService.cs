@@ -10,7 +10,7 @@ namespace MoricApps.EPlatform.Teachers.Application.Services
     {
         public async void SendEmailAsync(Teacher teacher, EmailTypes type)
         {
-            var apiKey = "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";
+            var apiKey = Environment.GetEnvironmentVariable("emailApiKey");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("michamoric@interia.pl", "testEmail");
             var subject = "";
