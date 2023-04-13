@@ -3,10 +3,12 @@ using MoricApps.EPlatform.Teachers.Contract;
 using MoricApps.EPlatform.Teachers.Api.Mapper;
 using MoricApps.EPlatform.Teachers.Application.Services;
 using MoricApps.EPlatform.Teachers.Domain.Exeptions;
+using Microsoft.AspNetCore.Cors;
 
 namespace MoricApps.EPlatform.Teachers.Api.Controllers
 {
     [Route("api/teachers")]
+    [EnableCors("AllowAllHeaders")]
     [ApiController]
     public class TeachersController : ControllerBase
     {
