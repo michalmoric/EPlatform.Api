@@ -5,7 +5,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
 {
     public static class TeacherContractDtoToModelMapper
     {
-        public static Teacher MapToModel(this TeacherInputDto dto)
+        public static Teacher? MapToModel(this TeacherInputDto dto)
         {
             List<TeacherAssigment> teacherAssigments = new List<TeacherAssigment>();
             if(dto == null)
@@ -18,7 +18,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Mapper
             }
             return new Teacher(dto.FirstName,dto.LastName,dto.Email,dto.PhoneNumber,teacherAssigments);
         }
-        public static TeacherReturnDto MapToDto(this Teacher model) 
+        public static TeacherReturnDto? MapToDto(this Teacher model) 
         {
             if(model == null)
             {

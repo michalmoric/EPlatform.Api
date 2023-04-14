@@ -10,7 +10,7 @@ namespace MoricApps.EPlatform.Teachers.Api.Repositories
 
         Task<Teacher?> GetTeacherAsync(int Id);
 
-        Task<Teacher> UpdateTeacherAsync(int Id, Teacher teacher);
+        Task<Teacher?> UpdateTeacherAsync(int Id, Teacher teacher);
 
     }
 }

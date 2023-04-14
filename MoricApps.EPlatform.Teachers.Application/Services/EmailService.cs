@@ -1,4 +1,5 @@
-﻿using MoricApps.EPlatform.Teachers.Domain.Models;
+﻿using Microsoft.Extensions.Configuration;
+using MoricApps.EPlatform.Teachers.Domain.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -8,15 +9,21 @@ namespace MoricApps.EPlatform.Teachers.Application.Services
 {
     public class EmailService : IEmailService
     {
+        private readonly IConfiguration  _config;
+
+        public EmailService(IConfiguration config)
+        {
+            _config = config;
+        }
         public async void SendEmailAsync(Teacher teacher, EmailTypes type)
         {
             var apiKey = Environment.GetEnvironmentVariable("emailApiKey");
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("michamoric@interia.pl", "testEmail");
+            var from = new EmailAddress(_config["EmailSettings:FromEmail"],_config["EmailSettings:FromEmailName"]);
             var subject = "";
             var plainTextContent = "";
             var htmlContent = "";
-            var to = new EmailAddress(teacher.Email, "testAdresat");
+            var to = new EmailAddress(teacher.Email);
             switch (type)
             {
                 case EmailTypes.Add:

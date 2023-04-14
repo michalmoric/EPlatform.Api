@@ -5,7 +5,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
 {
     public static class TeacherEntityMapper
     {
-        public static Teacher MapToModel(this TeacherEntity entity)
+        public static Teacher? MapToModel(this TeacherEntity entity)
         {
             if(entity == null)
             {
@@ -18,7 +18,7 @@ namespace MoricApps.EPlatform.Teachers.Storage.Mappers
             }
             return new Teacher(entity.Id,entity.FirstName, entity.LastName,entity.Email,entity.PhoneNumber,coll,entity.Status,entity.IsDeleted);
         }
-        public static TeacherEntity MapToEntity(this Teacher entity) 
+        public static TeacherEntity? MapToEntity(this Teacher entity) 
         {
             List<TeacherAssigmentEntity> coll = new List<TeacherAssigmentEntity>();
             if(entity == null)
